@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="CyberShield — understand website security in simple language.">
+<title>CyberShield — Know before you trust.</title>
+<style>
+:root{
+  --bg:#f5f5f7;--surface:rgba(255,255,255,.78);--white:#fff;--ink:#1d1d1f;
+  --muted:#6e6e73;--soft:#86868b;--line:rgba(0,0,0,.08);--blue:#0071e3;
+  --green:#34c759;--orange:#ff9f0a;--red:#ff3b30;--shadow:0 18px 55px rgba(0,0,0,.08)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 50% -12%,#fff 0,transparent 38%),var(--bg);color:var(--ink);
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
+-webkit-font-smoothing:antialiased;line-height:1.45}
+button,input{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.container{width:min(1120px,calc(100% - 40px));margin:auto}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;font-size:19px;font-weight:650;letter-spacing:-.4px}
+.brand-icon{width:30px;height:30px;border-radius:9px;background:#1d1d1f;color:#fff;display:grid;place-items:center;font-size:16px;box-shadow:0 5px 16px rgba(0,0,0,.13)}
+.nav-links{display:flex;gap:28px;color:#424245;font-size:13px}.nav-links a:hover{color:#000}
+.hero{min-height:690px;padding:70px 0 80px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;isolation:isolate}
+.hero:before{content:"";position:absolute;width:760px;height:420px;top:40px;left:50%;transform:translateX(-50%);
+background:radial-gradient(ellipse,rgba(0,113,227,.11),rgba(94,92,230,.045) 38%,transparent 72%);filter:blur(12px);z-index:-2}
+.orbit{position:absolute;border:1px solid rgba(0,113,227,.07);border-radius:50%;pointer-events:none;z-index:-1}
+.o1{width:590px;height:590px;top:55px;left:50%;transform:translateX(-50%) rotate(-15deg)}
+.o2{width:780px;height:320px;top:180px;left:50%;transform:translateX(-50%) rotate(12deg)}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:rgba(0,113,227,.07);color:#0066cc;font-size:10px;font-weight:650;letter-spacing:.2px}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(52,199,89,.08)}
+.hero-logo{margin-top:27px;width:76px;height:76px;border-radius:24px;background:linear-gradient(145deg,#1d1d1f,#4b4b4e);
+display:grid;place-items:center;box-shadow:0 20px 50px rgba(0,0,0,.16);animation:float 5s ease-in-out infinite}
+.shield{width:43px;height:49px;border:2px solid rgba(255,255,255,.9);border-radius:21px 21px 24px 24px;color:#fff;display:grid;place-items:center;font-size:26px}
+.hero-title{margin-top:21px;font-size:clamp(48px,7vw,76px);font-weight:720;letter-spacing:-4px;line-height:1.02;
+background:linear-gradient(90deg,#1d1d1f 24%,#0071e3 70%,#5e5ce6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tagline{margin-top:12px;font-size:clamp(22px,3vw,30px);font-weight:600;letter-spacing:-1px}
+.hero-copy{max-width:590px;margin:10px auto 0;color:var(--muted);font-size:16px;line-height:1.6}
+.scan-box{width:min(790px,100%);margin-top:32px;padding:7px;border:1px solid rgba(0,0,0,.08);border-radius:18px;background:rgba(255,255,255,.75);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);box-shadow:var(--shadow)}
+.scan-form{display:flex;gap:7px}.input-wrap{position:relative;flex:1;min-width:0}.input-icon{position:absolute;left:16px;top:50%;transform:translateY(-52%);color:#86868b;font-size:20px;pointer-events:none}
+.scan-form input{width:100%;height:50px;border:1px solid rgba(0,0,0,.06);border-radius:12px;background:#f5f5f7;padding:0 16px 0 43px;outline:none;color:var(--ink);font-size:15px}
+.scan-form input:focus{background:#fff;border-color:rgba(0,113,227,.35);box-shadow:0 0 0 4px rgba(0,113,227,.08)}
+.primary{height:50px;border:0;border-radius:12px;background:var(--blue);color:#fff;font-weight:650;padding:0 22px;white-space:nowrap;transition:.2s}
+.primary:hover{background:#0077ed;transform:translateY(-1px)}.primary:active{transform:scale(.98)}
+.disclaimer{margin:8px 7px 1px;text-align:left;color:#8a8a8f;font-size:10px}
+.loader{display:none;padding:18px 6px 5px}.loader.show{display:block}
+.progress{height:4px;background:#e5e5ea;border-radius:99px;overflow:hidden}.progress i{display:block;width:0;height:100%;background:var(--blue);animation:progress 2.4s ease forwards}
+.loader-row{display:flex;justify-content:space-between;gap:12px;margin-top:8px;color:var(--muted);font-size:10px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:pulse 1.7s infinite}
+.hero-trust{display:flex;gap:11px;align-items:center;margin-top:20px;color:#86868b;font-size:10px}.hero-trust i{width:3px;height:3px;background:#c7c7cc;border-radius:50%}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes progress{to{width:100%}}@keyframes pulse{70%{box-shadow:0 0 0 6px rgba(52,199,89,0)}}100%{box-shadow:0 0 0 0 rgba(52,199,89,0)}}
+
+.section{padding:42px 0 86px}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:22px;gap:20px}.section-head h2{margin:0;font-size:28px;line-height:1.15;letter-spacing:-1.2px}.section-head p{margin:0;color:var(--muted);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 30px rgba(0,0,0,.045);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);min-width:0;transition:.25s}
+.card:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.08)}
+.feature{padding:22px}.feature-icon{font-size:21px;margin-bottom:13px}.feature h3{margin:0 0 7px;font-size:16px;letter-spacing:-.25px}.feature p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+
+.results{display:none}.results.show{display:block;animation:up .5s ease}.result-top{display:grid;grid-template-columns:290px 1fr;gap:15px;align-items:start}
+.score-card{padding:27px;text-align:center}.ring{width:185px;height:185px;border-radius:50%;margin:2px auto 20px;display:grid;place-items:center;background:conic-gradient(var(--green) calc(var(--score)*1%),#e5e5ea 0);position:relative;transition:background 1s ease}.ring:after{content:"";position:absolute;inset:11px;border-radius:50%;background:#fff;border:1px solid rgba(0,0,0,.05)}.score{position:relative;z-index:1;font-size:50px;font-weight:700;letter-spacing:-3px}.score small{font-size:14px;color:var(--muted);letter-spacing:0}
+.risk{display:inline-block;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:650;background:#f0f0f2;color:#555}.risk.low{background:rgba(52,199,89,.1);color:#248a3d}.risk.mod{background:rgba(255,159,10,.1);color:#9b6200}.risk.high{background:rgba(255,59,48,.1);color:#c62820}.risk.unknown{background:rgba(0,113,227,.08);color:#0066cc}
+.target{margin-top:12px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+.result-card{padding:24px}.result-head{display:flex;justify-content:space-between;gap:15px;align-items:start;border-bottom:1px solid var(--line);padding-bottom:16px}.result-head h3{margin:0;font-size:18px;letter-spacing:-.4px}.result-head p{margin:4px 0 0;color:var(--muted);font-size:11px}
+.btn-quiet{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--ink);white-space:nowrap}.btn-quiet:hover{background:#fff}
+.helper{margin-top:14px;padding:11px 12px;border-radius:11px;background:#f5f5f7;color:var(--muted);font-size:10px;line-height:1.55}.helper strong{color:#0066cc}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.metric{background:#f5f5f7;border-radius:12px;padding:13px;min-width:0}.metric b{font-size:20px;font-weight:650;display:block}.metric span{font-size:9px;color:var(--muted);display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:12px}.check{display:flex;gap:8px;align-items:center;background:rgba(245,245,247,.7);padding:9px;border-radius:10px;font-size:10px;color:#555;min-width:0}.check-badge{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;flex:0 0 16px;background:#e8f8ed;color:#248a3d;font-size:9px;font-weight:800}.check.warn .check-badge{background:#fff3dc;color:#9b6200}.check.info .check-badge{background:#edf5ff;color:#0066cc}.check span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}.finding{padding:15px;border-radius:15px;background:rgba(255,255,255,.65);border:1px solid var(--line);min-width:0}.finding-row{display:flex;gap:9px;align-items:start}.finding-body{min-width:0;flex:1}.finding h4{margin:0 0 5px;font-size:13px;line-height:1.3}.finding p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.55;overflow-wrap:anywhere}.sev{flex:0 0 auto;font-size:8px;font-weight:750;padding:5px 6px;border-radius:6px;white-space:nowrap}.sev.low{background:rgba(52,199,89,.1);color:#248a3d}.sev.medium{background:rgba(255,159,10,.1);color:#9b6200}.sev.high{background:rgba(255,59,48,.1);color:#c62820}
+.actions{display:flex;justify-content:flex-end;margin-top:13px}.confidence{margin-top:9px;padding:10px 12px;border-radius:11px;background:#f7f7f8;color:var(--muted);font-size:10px;line-height:1.55}
+.modal{display:none;position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.45);backdrop-filter:blur(12px);padding:24px;overflow:auto}.modal.show{display:block}.report{width:min(820px,100%);margin:auto;background:#fff;border-radius:20px;padding:38px;box-shadow:0 30px 100px rgba(0,0,0,.2)}.report h1{margin:0;font-size:34px;letter-spacing:-1.5px;line-height:1.1}.report-sub{color:var(--muted);font-size:12px;margin-top:6px}.report-score{font-size:58px;font-weight:700;letter-spacing:-3px;margin:24px 0 3px}.report-risk{font-size:13px;color:var(--muted)}.report-item{padding:14px 0;border-bottom:1px solid #e5e5ea}.report-item b{display:block;font-size:12px;margin-bottom:4px}.report-item span{font-size:11px;color:#555;line-height:1.55}
+footer{border-top:1px solid var(--line);padding:28px 0;color:#86868b;font-size:10px}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+@media(max-width:820px){.result-top{grid-template-columns:1fr}.score-card{max-width:none}.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.container{width:min(100% - 28px,1120px)}.nav-links{display:none}.hero{min-height:620px;padding:50px 0}.hero-title{font-size:52px;letter-spacing:-2.8px}.hero-copy{font-size:14px}.scan-form{flex-direction:column}.primary{width:100%}.hero-trust{max-width:300px;justify-content:center;flex-wrap:wrap}.cards,.findings{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:6px}.result-head{flex-direction:column}.btn-quiet{width:100%}}
+@media(max-width:440px){.hero-title{font-size:44px}.hero-logo{width:68px;height:68px;border-radius:21px}.tagline{font-size:22px}.metrics{grid-template-columns:1fr}.metric span{white-space:normal}.checks{grid-template-columns:1fr}.modal{padding:10px}.report{padding:24px}.report h1{font-size:29px}}
+
+@media print{
+  body{background:#fff}.nav,.hero,.section,.modal .btn-quiet,.report .primary{display:none!important}
+  .modal{display:block!important;position:static;background:#fff;padding:0}.report{width:100%;box-shadow:none;border-radius:0;padding:20px}
+}
+
+.report-shell{width:min(940px,100%);margin:0 auto;background:#f5f5f7;border:1px solid rgba(255,255,255,.5);border-radius:22px;box-shadow:0 35px 120px rgba(0,0,0,.25);overflow:hidden}
+.report-topbar{height:62px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.07);background:rgba(255,255,255,.86)}
+.report-brand{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:650}.report-brand-icon{width:25px;height:25px;border-radius:7px;background:#1d1d1f;color:#fff;display:grid;place-items:center}
+.report-document{background:#fff}.report-cover{padding:52px 58px 45px;border-bottom:1px solid #e5e5ea}.report-kicker{font-size:9px;letter-spacing:1.4px;font-weight:750;color:#0071e3}
+.report-cover h1{margin:14px 0 8px;max-width:none;font-size:42px;line-height:1.05;letter-spacing:-2.2px;color:#1d1d1f}.report-intro{margin:0;color:#6e6e73;font-size:13px;line-height:1.6;max-width:600px}
+.report-identity{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:34px;padding-top:19px;border-top:1px solid #e5e5ea}.report-identity span,.report-label{display:block;font-size:8px;letter-spacing:.8px;color:#86868b;font-weight:750;margin-bottom:5px}.report-identity strong{display:block;font-size:11px;overflow-wrap:anywhere}
+.report-score-row{display:flex;align-items:center;gap:22px;margin-top:30px}.report-score-circle{width:105px;height:105px;border-radius:50%;background:#f5f5f7;border:7px solid #e8f8ed;display:flex;align-items:center;justify-content:center;gap:1px;flex:0 0 auto}.report-score-circle strong{font-size:31px;letter-spacing:-2px}.report-score-circle span{font-size:9px;color:#86868b;margin-top:13px}.report-verdict>strong{display:block;font-size:20px;letter-spacing:-.5px}.report-verdict p{margin:5px 0 0;color:#6e6e73;font-size:10px;line-height:1.5}
+.report-section{padding:32px 58px;border-bottom:1px solid #e5e5ea}.report-section-head{display:flex;gap:13px;align-items:start;margin-bottom:18px}.report-section-head>span{font-size:9px;color:#0071e3;font-weight:800;padding-top:3px}.report-section-head h2{margin:0;font-size:17px;letter-spacing:-.5px}.report-section-head p{margin:3px 0 0;color:#86868b;font-size:10px}
+.report-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.report-stat{background:#f5f5f7;border-radius:12px;padding:15px}.report-stat strong{display:block;font-size:21px}.report-stat span{font-size:9px;color:#6e6e73}
+.report-check-list{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.report-check{display:flex;align-items:center;gap:9px;padding:10px 11px;background:#f7f7f8;border-radius:10px;min-width:0}.report-check-icon{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:0 0 18px;font-size:9px;font-weight:800;background:#e8f8ed;color:#248a3d}.report-check-icon.warn{background:#fff3dc;color:#9b6200}.report-check-icon.info{background:#edf5ff;color:#0066cc}.report-check-text{min-width:0}.report-check-text strong{display:block;font-size:10px}.report-check-text span{display:block;color:#86868b;font-size:8px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.report-findings{display:grid;gap:8px}.report-finding{padding:14px 15px;border:1px solid #e5e5ea;border-radius:12px}.report-finding-head{display:flex;gap:10px;align-items:start}.report-finding-body{min-width:0;flex:1}.report-finding h3{margin:0 0 5px;font-size:11px}.report-finding p{margin:0;color:#6e6e73;font-size:9.5px;line-height:1.55}.report-severity{font-size:7px;font-weight:800;padding:5px 6px;border-radius:6px;white-space:nowrap}.report-severity.low{background:#e8f8ed;color:#248a3d}.report-severity.medium{background:#fff3dc;color:#9b6200}.report-severity.high{background:#ffebe9;color:#c62820}
+.report-note{margin:26px 58px;padding:15px 17px;border-radius:12px;background:#f5f5f7}.report-note strong{font-size:10px}.report-note p{margin:5px 0 0;color:#6e6e73;font-size:9px;line-height:1.55}.report-footer{padding:18px 58px;display:flex;justify-content:space-between;gap:15px;color:#86868b;font-size:8px}.report-actions{display:flex;justify-content:flex-end;gap:8px;padding:14px 22px;background:rgba(255,255,255,.86);border-top:1px solid rgba(0,0,0,.07)}
+@media(max-width:700px){.report-shell{border-radius:0;min-height:100vh}.report-cover,.report-section{padding-left:25px;padding-right:25px}.report-note{margin-left:25px;margin-right:25px}.report-footer{padding-left:25px;padding-right:25px}.report-cover h1{font-size:34px}.report-identity{grid-template-columns:1fr 1fr}.report-identity div:first-child{grid-column:1/-1}.report-summary-grid{grid-template-columns:repeat(2,1fr)}.report-check-list{grid-template-columns:1fr}}
+@media print{body{background:#fff}.nav,.hero,.section,.report-topbar,.report-actions{display:none!important}.modal{display:block!important;position:static;background:#fff;padding:0}.report-shell{width:100%;box-shadow:none;border:0;border-radius:0}.report-cover,.report-section,.report-note{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="container nav">
+  <a class="brand" href="#"><span class="brand-icon">⌁</span>CyberShield</a>
+  <nav class="nav-links"><a href="#security">Security checks</a><a href="#scanner">Check a website</a></nav>
+</header>
+
+<main>
+<section class="hero container" id="scanner">
+  <div class="orbit o1"></div><div class="orbit o2"></div>
+  <div class="pill"><span class="pill-dot"></span> SECURITY ANALYZER</div>
+  <div class="hero-logo"><div class="shield">⌁</div></div>
+  <div class="hero-title">CyberShield</div>
+  <div class="tagline">Know before you trust.</div>
+  <p class="hero-copy">Check a website and get a clear view of what CyberShield can verify about its security.</p>
+
+  <div class="scan-box">
+    <form class="scan-form" id="scanForm">
+      <div class="input-wrap"><span class="input-icon">⌕</span><input id="domain" required autocomplete="off" placeholder="Paste a website, like instagram.com"></div>
+      <button class="primary" id="scanBtn" type="submit">Check website</button>
+    </form>
+    <div class="disclaimer">Only check websites you own or are authorized to assess. CyberShield uses safe, non-invasive checks.</div>
+    <div class="loader" id="loader">
+      <div class="progress"><i></i></div>
+      <div class="loader-row"><span id="loaderText">Checking the address…</span><span><span class="live-dot"></span>Safe analysis</span></div>
+    </div>
+  </div>
+  <div class="hero-trust"><span>Evidence-first</span><i></i><span>Non-invasive</span><i></i><span>Plain language</span></div>
+</section>
+
+<section class="section container results" id="results">
+  <div class="section-head">
+    <div><h2>Your security check</h2><p id="resultSubtitle">Assessment results</p></div>
+    <button class="btn-quiet" id="newScan">New check</button>
+  </div>
+  <div class="result-top">
+    <div class="card score-card">
+      <div class="ring" id="scoreRing" style="--score:0"><div class="score" id="scoreNumber">—<small>/100</small></div></div>
+      <div class="risk unknown" id="riskLabel">Not enough evidence</div>
+      <div class="target" id="targetLabel">—</div>
+    </div>
+    <div class="card result-card">
+      <div class="result-head"><div><h3>At a glance</h3><p id="timestamp">—</p></div><button class="btn-quiet" id="reportBtn">View report</button></div>
+      <div class="helper"><strong>Evidence matters.</strong> CyberShield only scores what it can verify. If something cannot be checked, we tell you instead of guessing.</div>
+      <div class="metrics">
+        <div class="metric"><b id="passed">0</b><span>Passed</span></div>
+        <div class="metric"><b id="warnings">0</b><span>Needs attention</span></div>
+        <div class="metric"><b id="critical">0</b><span>High priority</span></div>
+      </div>
+      <div class="checks" id="checks"></div>
+      <div class="findings" id="findings"></div>
+      <div class="confidence" id="confidence"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section container" id="security">
+  <div class="section-head"><div><h2>Security, made simple.</h2><p>The important signals, explained without the technical jargon.</p></div></div>
+  <div class="cards">
+    <div class="card feature"><div class="feature-icon">🔒</div><h3>Secure connection</h3><p>Is your connection protected?</p></div>
+    <div class="card feature"><div class="feature-icon">🛡️</div><h3>Website protection</h3><p>Are important security safeguards in place?</p></div>
+    <div class="card feature"><div class="feature-icon">🍪</div><h3>Privacy & cookies</h3><p>How is information stored in your browser protected?</p></div>
+    <div class="card feature"><div class="feature-icon">🌐</div><h3>Website identity</h3><p>Does the address show any signs that need attention?</p></div>
+    <div class="card feature"><div class="feature-icon">↪</div><h3>Safe navigation</h3><p>Where does the website take you?</p></div>
+    <div class="card feature"><div class="feature-icon">✨</div><h3>What to do next</h3><p>Get clear, prioritized recommendations.</p></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="container">© 2026 CyberShield · Evidence-first website security analyzer · Authorized testing only.</div></footer>
+
+<div class="modal" id="reportModal" aria-hidden="true">
+  <div class="report-shell">
+    <div class="report-topbar">
+      <div class="report-brand"><span class="report-brand-icon">⌁</span><span>CyberShield</span></div>
+      <button class="btn-quiet" id="closeReport">Close</button>
+    </div>
+    <div class="report-document">
+      <div class="report-cover">
+        <div class="report-kicker">SECURITY CHECK · EVIDENCE REPORT</div>
+        <h1>Website Security Report</h1>
+        <p class="report-intro">A structured summary of the security signals CyberShield was able to verify.</p>
+        <div class="report-identity">
+          <div><span>WEBSITE</span><strong id="reportTarget">—</strong></div>
+          <div><span>GENERATED</span><strong id="reportDate">—</strong></div>
+          <div><span>SCAN TYPE</span><strong id="reportMode">—</strong></div>
+        </div>
+        <div class="report-score-row">
+          <div class="report-score-circle"><strong id="reportScore">—</strong><span>/100</span></div>
+          <div class="report-verdict"><span class="report-label">OVERALL RESULT</span><strong id="reportRisk">—</strong><p id="reportConfidence">—</p></div>
+        </div>
+      </div>
+      <div class="report-section">
+        <div class="report-section-head"><span>01</span><div><h2>Executive summary</h2><p>What the scan found at a glance.</p></div></div>
+        <div class="report-summary-grid">
+          <div class="report-stat"><strong id="reportPassed">0</strong><span>Passed</span></div>
+          <div class="report-stat"><strong id="reportWarnings">0</strong><span>Needs attention</span></div>
+          <div class="report-stat"><strong id="reportHigh">0</strong><span>High priority</span></div>
+          <div class="report-stat"><strong id="reportEvidence">0%</strong><span>Evidence verified</span></div>
+        </div>
+      </div>
+      <div class="report-section">
+        <div class="report-section-head"><span>02</span><div><h2>Checks performed</h2><p>Signals CyberShield evaluated.</p></div></div>
+        <div id="reportChecks" class="report-check-list"></div>
+      </div>
+      <div class="report-section">
+        <div class="report-section-head"><span>03</span><div><h2>Findings & recommendations</h2><p>Prioritized observations from the assessment.</p></div></div>
+        <div id="reportItems" class="report-findings"></div>
+      </div>
+      <div class="report-note"><strong>About this report</strong><p>CyberShield reports evidence it can verify and clearly identifies information it could not verify. A browser-only scan is not a penetration test and cannot prove that a website is completely safe.</p></div>
+      <div class="report-footer"><span>CyberShield · Evidence-first website security analyzer</span><span>Authorized testing only</span></div>
+    </div>
+    <div class="report-actions"><button class="btn-quiet" id="closeReportBottom">Close</button><button class="primary" id="printReport">Print / Save as PDF</button></div>
+  </div>
+</div>
+<script>
+/*
+  Optional production backend:
+  window.CYBERSHIELD_API = "https://your-authorized-scanner.example/api";
+  The backend should return evidence, not guesses.
+*/
+
+const $ = id => document.getElementById(id);
+let currentReport = null;
+
+function normalizeDomain(value){
+  let raw=value.trim();
+  if(!/^https?:\/\//i.test(raw)) raw="https://"+raw;
+  try{
+    const u=new URL(raw);
+    if(!["http:","https:"].includes(u.protocol)) return null;
+    return {url:u,domain:u.hostname.replace(/^www\./i,"").toLowerCase()};
+  }catch{return null}
+}
+function esc(value){
+  return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+
+async function runAnalysis(domain,url){
+  const findings=[],checks=[];
+  let points=0,possible=0,verified=0;
+  const add=(name,state,detail)=>checks.push({name,state,detail});
+  const finding=(title,severity,text)=>findings.push({title,severity,text});
+
+  possible+=15;
+  if(url.protocol==="https:"){points+=15;verified+=15;add("Secure connection","pass","The address uses HTTPS.")}
+  else{
+    verified+=15;add("Secure connection","fail","The address uses HTTP.");
+    const credentialPath=/\/(login|signin|account|checkout|payment|verify)(?:\/|$)/i.test(url.pathname);
+    finding("Connection is not secure","high",credentialPath
+      ?"This address uses HTTP and appears to contain a sign-in, account or payment path. Do not enter sensitive information."
+      :"This address starts with HTTP instead of HTTPS. Do not enter passwords or sensitive information until the site uses a secure connection.")
+  }
+
+  possible+=10;
+  const valid=/^(?=.{1,253}$)(?!-)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(domain);
+  if(valid){points+=10;verified+=10;add("Website address","pass","The domain has a normal public-domain structure.")}
+  else{verified+=10;add("Website address","warn","The domain structure is unusual.");finding("Unusual website address","medium","The address does not match a normal public-domain pattern. Double-check the spelling before trusting it.")}
+
+  possible+=10;
+  if(domain.includes("xn--")){verified+=10;add("Domain characters","warn","The domain contains internationalized/punycode characters.");finding("Domain needs extra attention","medium","Encoded international characters can be legitimate, but visually similar addresses can be confusing.")}
+  else{points+=10;verified+=10;add("Domain characters","pass","No punycode label was detected.")}
+
+  const api=window.CYBERSHIELD_API;
+  if(api){
+    try{
+      const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),10000);
+      const r=await fetch(api.replace(/\/$/,"")+"/scan?url="+encodeURIComponent(url.href),{headers:{Accept:"application/json"},signal:controller.signal});
+      clearTimeout(timer);
+      if(r.ok){
+        const data=await r.json();
+        if(typeof data.score==="number"){points=Math.max(0,Math.min(100,data.score));possible=Math.max(possible,100)}
+        if(Array.isArray(data.checks)) data.checks.forEach(x=>x?.name&&x?.state&&checks.push({name:String(x.name),state:String(x.state),detail:String(x.detail||"")}));
+        if(Array.isArray(data.findings)) data.findings.forEach(x=>x?.title&&x?.severity&&findings.push({title:String(x.title),severity:String(x.severity),text:String(x.text||"")}));
+        verified=Math.max(verified,Number(data.verifiedPoints||0));
+        possible=Math.max(possible,Number(data.possiblePoints||0));
+        add("Live server checks","pass","Verified by the configured CyberShield analysis server.");
+      }else add("Live server checks","info","The analysis server could not verify this target.");
+    }catch{add("Live server checks","info","No live analysis server was available.")}
+  }else{
+    add("Live server checks","info","Not available in this HTML-only build.");
+    finding("More checks require live server access","medium","A standalone browser cannot reliably inspect another website's response headers, cookies, TLS details and DNS records. A server-side scanner is required for those checks.");
+  }
+
+  const ratio=possible?verified/possible:0;
+  const score=api&&possible>=100?Math.round(points):Math.round((points/possible)*100);
+  let risk="Not enough evidence";
+  const high=findings.filter(f=>f.severity==="high").length;
+  if(ratio>=.85){
+    if(high===0&&score>=90)risk="Low Risk";
+    else if(high===0&&score>=70)risk="Moderate Risk";
+    else risk="High Risk";
+  }
+  const medium=findings.filter(f=>f.severity==="medium").length;
+  const passed=checks.filter(c=>c.state==="pass").length;
+  return {domain,url:url.href,score,risk,findings,checks,high,medium,passed,confidence:Math.round(ratio*100),mode:api?"Evidence-based scan":"Browser-only preliminary scan"};
+}
+
+function render(data){
+  currentReport=data;
+  $("results").classList.add("show");
+  $("resultSubtitle").textContent=data.mode+" · "+new Date().toLocaleString();
+  $("targetLabel").textContent=data.domain;
+  $("timestamp").textContent=new Date().toLocaleTimeString();
+  $("riskLabel").textContent=data.risk;
+  $("riskLabel").className="risk "+(data.risk==="Low Risk"?"low":data.risk==="Moderate Risk"?"mod":data.risk==="High Risk"?"high":"unknown");
+  $("passed").textContent=data.passed;
+  $("warnings").textContent=data.medium;
+  $("critical").textContent=data.high;
+  $("confidence").innerHTML="<strong>Evidence verified: "+data.confidence+"%</strong> · "+(data.mode==="Evidence-based scan"?"Based on checks returned by the configured analysis server.":"This standalone HTML build cannot inspect most cross-origin server controls.");
+
+  $("checks").innerHTML=(data.checks||[]).map(c=>{
+    const icon=c.state==="pass"?"✓":c.state==="warn"?"!":"i";
+    return `<div class="check ${esc(c.state)}" title="${esc(c.detail)}"><span class="check-badge">${icon}</span><span>${esc(c.name)}</span></div>`;
+  }).join("");
+
+  $("findings").innerHTML=(data.findings||[]).map(f=>`
+    <div class="finding"><div class="finding-row"><div class="finding-body"><h4>${esc(f.title)}</h4><p>${esc(f.text)}</p></div><span class="sev ${esc(f.severity)}">${esc(f.severity.toUpperCase())}</span></div></div>
+  `).join("");
+
+  const ring=$("scoreRing"),num=$("scoreNumber"),start=0,t0=performance.now();
+  function animate(now){
+    const p=Math.min(1,(now-t0)/850),e=1-Math.pow(1-p,3),v=Math.round(start+(data.score-start)*e);
+    num.innerHTML=v+'<small>/100</small>';ring.style.setProperty("--score",v);
+    if(p<1)requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+  $("results").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+$("scanForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if($("scanForm").dataset.busy==="1")return;
+  const parsed=normalizeDomain($("domain").value);
+  if(!parsed){$("domain").focus();alert("Please enter a valid website, such as instagram.com");return}
+
+  $("scanForm").dataset.busy="1";$("scanBtn").disabled=true;$("scanBtn").textContent="Checking…";
+  $("results").classList.remove("show");$("loader").classList.add("show");
+  const messages=["Checking the address…","Verifying secure connection…","Collecting available evidence…","Calculating confidence…"];
+  let i=0;$("loaderText").textContent=messages[0];
+  const interval=setInterval(()=>{i=Math.min(i+1,messages.length-1);$("loaderText").textContent=messages[i]},560);
+
+  await new Promise(r=>setTimeout(r,1200));
+  const data=await runAnalysis(parsed.domain,parsed.url);
+  clearInterval(interval);$("loader").classList.remove("show");
+  $("scanForm").dataset.busy="0";$("scanBtn").disabled=false;$("scanBtn").textContent="Check website";
+  render(data);
+});
+
+$("newScan").addEventListener("click",()=>{
+  $("results").classList.remove("show");$("domain").focus();window.scrollTo({top:0,behavior:"smooth"});
+});
+
+$("reportBtn").addEventListener("click",()=>{
+  if(!currentReport)return;
+  const d=currentReport;
+  $("reportTarget").textContent=d.domain;
+  $("reportDate").textContent=new Date().toLocaleString();
+  $("reportMode").textContent=d.mode;
+  $("reportScore").textContent=d.score;
+  $("reportRisk").textContent=d.risk;
+  $("reportConfidence").textContent="Evidence verified: "+d.confidence+"% · "+(d.mode==="Evidence-based scan"?"Live server evidence available.":"Browser-only evidence; server controls require backend verification.");
+  $("reportPassed").textContent=d.passed;
+  $("reportWarnings").textContent=d.medium;
+  $("reportHigh").textContent=d.high;
+  $("reportEvidence").textContent=d.confidence+"%";
+  $("reportChecks").innerHTML=(d.checks||[]).map(c=>{
+    const state=c.state==="pass"?"pass":c.state==="warn"?"warn":"info";
+    const icon=c.state==="pass"?"✓":c.state==="warn"?"!":"i";
+    return `<div class="report-check"><span class="report-check-icon ${state}">${icon}</span><div class="report-check-text"><strong>${esc(c.name)}</strong><span>${esc(c.detail)}</span></div></div>`;
+  }).join("");
+  $("reportItems").innerHTML=(d.findings||[]).map(f=>`
+    <div class="report-finding"><div class="report-finding-head">
+      <div class="report-finding-body"><h3>${esc(f.title)}</h3><p>${esc(f.text)}</p></div>
+      <span class="report-severity ${esc(f.severity)}">${esc(f.severity.toUpperCase())}</span>
+    </div></div>`).join("");
+  const circle=document.querySelector(".report-score-circle");
+  if(circle)circle.style.borderColor=d.risk==="Low Risk"?"#e8f8ed":d.risk==="Moderate Risk"?"#fff3dc":d.risk==="High Risk"?"#ffebe9":"#edf5ff";
+  $("reportModal").classList.add("show");
+  $("reportModal").setAttribute("aria-hidden","false");
+});
+function closeReport(){$("reportModal").classList.remove("show");$("reportModal").setAttribute("aria-hidden","true")}
+$("closeReport").addEventListener("click",closeReport);
+$("closeReportBottom").addEventListener("click",closeReport);
+$("reportModal").addEventListener("click",e=>{if(e.target===$("reportModal"))closeReport()});
+$("printReport").addEventListener("click",()=>window.print());
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeReport()});
+</script>
+</body>
+</html>
